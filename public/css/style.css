@@ -1,5 +1,7 @@
 @charset "utf-8";
-
+h1 {
+    color: blue;
+}
 /*media query*/
 /*ref)*/
 /*https://www.seojuku.com/blog/responsive-mediaquery.html*/
