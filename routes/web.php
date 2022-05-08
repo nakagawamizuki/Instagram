@@ -24,7 +24,7 @@ Route::group(['middleware' => ['guest']], function () {
 
 });
 
- // ユーザー認証必要
+// ユーザー認証必要
 Route::group(['middleware' => ['auth']], function () {
     
     // ログイン後のリダイレクト先
@@ -41,8 +41,15 @@ Route::group(['middleware' => ['auth']], function () {
     
     // 画像投稿関係
     Route::resource('posts', 'PostsController');
+    
+    // ネスト
+    Route::group(['prefix' => 'posts/{id}'], function () {
+        // 投稿に対するコメント
+        Route::post('comment', 'CommentsController@store')->name('comments.store');
+    });
 
 });
+
 
 
 
