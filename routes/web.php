@@ -24,13 +24,11 @@ Route::group(['middleware' => ['guest']], function () {
 
 });
 
-// ユーザー認証必要
+ // ユーザー認証必要
 Route::group(['middleware' => ['auth']], function () {
     
     // ログイン後のリダイレクト先
-    Route::get('top', function () {
-         return view('top');
-    });
+    Route::get('/top', 'PostsController@index');
     
     // ログアウト
     Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
@@ -40,6 +38,9 @@ Route::group(['middleware' => ['auth']], function () {
     
     // プロフィール関係
     Route::resource('profiles', 'ProfilesController');
+    
+    // 画像投稿関係
+    Route::resource('posts', 'PostsController');
 
 });
 
