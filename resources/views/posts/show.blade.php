@@ -12,6 +12,9 @@
             <th>内容</th>
             <th>画像</th>
             <th>投稿日時</th>
+            <th>いいね/いいいね解除</th>
+            <th>いいねの数</th>
+            <th>いいねした人の一覧</th>
         </tr>
         <tr>
             <td>{{ $post->id }}</td>
@@ -20,6 +23,26 @@
             <td>{{ $post->content }}</td>
             <td><img src="{{ asset('uploads')}}/{{$post->image}}" alt="{{ $post->image }}"></td>
             <td>{{ $post->created_at }}</td>
+            <td>
+                @if(!Auth::user()->is_favorite($post->id))
+                {!! Form::open(['route' => ['posts.favorite', 'id' => $post->id ]]) !!}
+                    {!! Form::submit('いいね', ['class' => 'btn btn-primary btn-block']) !!}
+                {!! Form::close() !!}
+                @else
+                {!! Form::open(['route' => ['posts.unfavorite', 'id' => $post->id ], 'method' => 'DELETE']) !!}
+                    {!! Form::submit('いいね解除', ['class' => 'btn btn-danger btn-block']) !!}
+                {!! Form::close() !!}
+                @endif
+            </td>
+            <td>{{ count($favorite_users) }}いいね</td>
+            <td>
+                <ul>
+                    @foreach($favorite_users as $user)
+                    <li>{!! link_to_route('users.show', $user->name , ['id' => $user->id ],[]) !!}</li>
+                    @endforeach
+                </ul>
+            </td>
+            <td></td>
         </tr>
     </table>
 

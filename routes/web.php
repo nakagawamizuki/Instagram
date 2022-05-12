@@ -45,7 +45,11 @@ Route::group(['middleware' => ['auth']], function () {
     // ネスト
     Route::group(['prefix' => 'posts/{id}'], function () {
         // 投稿に対するコメント
-        Route::post('comment', 'CommentsController@store')->name('comments.store');
+        Route::post('comments', 'CommentsController@store')->name('comments.store');
+        
+        // いいね系
+        Route::post('favorite', 'FavoritesController@store')->name('posts.favorite');
+        Route::delete('unfavorite', 'FavoritesController@destroy')->name('posts.unfavorite');
     });
 
 });

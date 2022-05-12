@@ -91,11 +91,13 @@ class PostsController extends Controller
     {
         // 空のCommentモデル作成
         $comment = new Comment();
-        // 注目するコメントに紐づいたコメント一覧を取得
+        // 注目する投稿に紐づいたコメント一覧を取得
         $comments = $post->comments()->get();
+        // 注目する投稿にいいねをした人の一覧を取得
+        $favorite_users = $post->favorite_users()->get();
         
         // view の呼び出し
-        return view('posts.show', compact('post', 'comment', 'comments'));
+        return view('posts.show', compact('post', 'comment', 'comments', 'favorite_users'));
     }
 
     /**
