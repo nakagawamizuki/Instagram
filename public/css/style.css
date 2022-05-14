@@ -11,6 +11,9 @@ td img {
 .image_title {
     width: 100%;
 }
+.avatar {
+    width: 50px;
+}
 
 /*media query*/
 /*ref)*/
