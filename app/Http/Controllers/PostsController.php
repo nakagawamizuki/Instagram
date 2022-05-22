@@ -192,6 +192,7 @@ class PostsController extends Controller
             return redirect('/top');
         }
     }
+    
     // いいねランキング表示
     public function rankings(){
         //いいね数が多い順に投稿のデータを取得(今回は上位3件)
@@ -200,6 +201,25 @@ class PostsController extends Controller
 
         // view の呼び出し
         return view('posts.rankings', compact('posts')); 
+    }
+
+    // キーワード検索
+    public function search(Request $request){
+        
+        // validation
+        $this->validate($request, ['keyword' => 'required']);
+        
+        // 入力された検索キーワードを取得
+        $keyword = $request->input('keyword');
+
+        // 検索
+        $posts = Post::where('title','like', '%' . $keyword . '%')->orWhere('content', 'like', '%' . $keyword . '%')->paginate(10);
+        // フラッシュメッセージのセット
+        $flash_message = '検索キーワード: 『' . $keyword . '』に' . $posts->count() . '件ヒットしました';
+        
+        // view の呼び出し
+        return view('top', compact('posts', 'flash_message'));
+
     }
 
 }
